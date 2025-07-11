@@ -14,15 +14,9 @@
             <div id="timer" class="timer">5</div>
         </div>
         <div class="controls">
-            <div class="mode-select">
-                <label>
-                    <input type="radio" name="mode" value="learn" checked>
-                    Nauka (Learning)
-                </label>
-                <label>
-                    <input type="radio" name="mode" value="exam">
-                    Egzamin (Exam)
-                </label>
+            <div class="number-input-row">
+                <input id="user-input" type="number" min="0" max="999" placeholder="Wpisz liczbę" autocomplete="off" />
+                <button id="read-btn">Read</button>
             </div>
             <button id="start-btn">Start Game</button>
             <button id="pause-btn">Pause</button>

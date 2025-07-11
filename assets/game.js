@@ -63,10 +63,35 @@ document.addEventListener('DOMContentLoaded', () => {
         window.speechSynthesis.speak(utter);
     }
 
-    function getSelectedMode() {
-        const modeRadio = document.querySelector('input[name="mode"]:checked');
-        return modeRadio ? modeRadio.value : 'learn';
+
+    // Read button logic
+    const readBtn = document.getElementById('read-btn');
+    const userInput = document.getElementById('user-input');
+
+    function speakPolishAnyNumber(num) {
+        // For now, only 0-9 supported, but can be extended
+        let text = '';
+        if (num >= 0 && num <= 9) {
+            text = polishNumbers[num];
+        } else {
+            text = num.toString(); // fallback: just read the number
+        }
+        if (!('speechSynthesis' in window)) return;
+        const utter = new window.SpeechSynthesisUtterance(text);
+        utter.lang = 'pl-PL';
+        utter.rate = 0.95;
+        utter.pitch = 1.1;
+        const voices = window.speechSynthesis.getVoices();
+        const polishVoice = voices.find(v => v.lang.startsWith('pl'));
+        if (polishVoice) utter.voice = polishVoice;
+        window.speechSynthesis.speak(utter);
     }
+
+    readBtn.addEventListener('click', () => {
+        const val = userInput.value.trim();
+        if (val === '' || isNaN(val)) return;
+        speakPolishAnyNumber(Number(val));
+    });
 
 
     function updateTimerDisplay() {
@@ -133,9 +158,7 @@ document.addEventListener('DOMContentLoaded', () => {
         updateTimerDisplay();
         const number = Math.floor(Math.random() * 10); // 0-9 for now
         drawAcrylicNumber(number);
-        if (getSelectedMode() === 'learn') {
-            speakPolishNumber(number);
-        }
+        // Exam mode: no voice
         startTimer();
     }
 

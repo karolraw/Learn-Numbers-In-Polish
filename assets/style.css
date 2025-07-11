@@ -1,3 +1,23 @@
+.number-input-row {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 8px;
+}
+
+#user-input {
+    font-size: 1.1rem;
+    padding: 7px 12px;
+    border-radius: 6px;
+    border: 1px solid #b0b0b0;
+    width: 90px;
+    outline: none;
+    transition: border 0.2s;
+}
+#user-input:focus {
+    border: 1.5px solid #64b5f6;
+}
 .timer {
     position: absolute;
     top: 18px;
