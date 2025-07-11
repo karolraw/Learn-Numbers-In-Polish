@@ -1,3 +1,23 @@
+.timer {
+    position: absolute;
+    top: 18px;
+    right: 32px;
+    background: rgba(255,255,255,0.85);
+    color: #3a3a3a;
+    font-size: 1.5rem;
+    font-weight: bold;
+    border-radius: 8px;
+    padding: 4px 16px;
+    box-shadow: 0 2px 8px 0 rgba(31, 38, 135, 0.08);
+    z-index: 2;
+    min-width: 40px;
+    text-align: center;
+    pointer-events: none;
+}
+
+.acrylic-canvas-wrapper {
+    position: relative;
+}
 body {
     margin: 0;
     padding: 0;

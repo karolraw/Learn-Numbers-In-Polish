@@ -4,6 +4,11 @@ document.addEventListener('DOMContentLoaded', () => {
     const canvas = document.getElementById('acrylic-canvas');
     const ctx = canvas.getContext('2d');
     const startBtn = document.getElementById('start-btn');
+    const timerDiv = document.getElementById('timer');
+
+    let timer = null;
+    let timeLeft = 10;
+    let gameActive = false;
 
     // Acrylic brush style colors
     const colors = [
@@ -59,12 +64,34 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
 
+    function updateTimerDisplay() {
+        timerDiv.textContent = timeLeft;
+    }
+
+    function startTimer() {
+        timeLeft = 10;
+        updateTimerDisplay();
+        if (timer) clearInterval(timer);
+        timer = setInterval(() => {
+            timeLeft--;
+            updateTimerDisplay();
+            if (timeLeft <= 0) {
+                clearInterval(timer);
+                timer = null;
+                gameActive = false;
+                timerDiv.textContent = '⏰';
+            }
+        }, 1000);
+    }
+
     function showRandomNumber() {
+        if (!gameActive) gameActive = true;
         const number = Math.floor(Math.random() * 10); // 0-9 for now
         drawAcrylicNumber(number);
         if (getSelectedMode() === 'learn') {
             speakPolishNumber(number);
         }
+        startTimer();
     }
 
     startBtn.addEventListener('click', showRandomNumber);
