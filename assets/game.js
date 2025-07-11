@@ -11,6 +11,12 @@ document.addEventListener('DOMContentLoaded', () => {
         '#81c784', '#ffd54f', '#ffb74d', '#a1887f', '#90a4ae'
     ];
 
+    // Polish words for digits 0-9
+    const polishNumbers = [
+        'zero', 'jeden', 'dwa', 'trzy', 'cztery',
+        'pięć', 'sześć', 'siedem', 'osiem', 'dziewięć'
+    ];
+
     function clearCanvas() {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
     }
@@ -34,9 +40,23 @@ document.addEventListener('DOMContentLoaded', () => {
         ctx.restore();
     }
 
+    function speakPolishNumber(number) {
+        if (!('speechSynthesis' in window)) return;
+        const utter = new window.SpeechSynthesisUtterance(polishNumbers[number]);
+        utter.lang = 'pl-PL';
+        utter.rate = 0.95;
+        utter.pitch = 1.1;
+        // Try to use a Polish voice if available
+        const voices = window.speechSynthesis.getVoices();
+        const polishVoice = voices.find(v => v.lang.startsWith('pl'));
+        if (polishVoice) utter.voice = polishVoice;
+        window.speechSynthesis.speak(utter);
+    }
+
     function showRandomNumber() {
         const number = Math.floor(Math.random() * 10); // 0-9 for now
         drawAcrylicNumber(number);
+        speakPolishNumber(number);
     }
 
     startBtn.addEventListener('click', showRandomNumber);
