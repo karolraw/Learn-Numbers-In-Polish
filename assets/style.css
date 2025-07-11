@@ -60,6 +60,21 @@ h1 {
     align-items: center;
 }
 
+.mode-select {
+    display: flex;
+    gap: 18px;
+    margin-bottom: 6px;
+    font-size: 1rem;
+    justify-content: center;
+}
+.mode-select label {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    cursor: pointer;
+    user-select: none;
+}
+
 button {
     background: linear-gradient(90deg, #a1c4fd 0%, #c2e9fb 100%);
     color: #2d3a4b;

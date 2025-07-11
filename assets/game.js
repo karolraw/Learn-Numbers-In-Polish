@@ -53,10 +53,18 @@ document.addEventListener('DOMContentLoaded', () => {
         window.speechSynthesis.speak(utter);
     }
 
+    function getSelectedMode() {
+        const modeRadio = document.querySelector('input[name="mode"]:checked');
+        return modeRadio ? modeRadio.value : 'learn';
+    }
+
+
     function showRandomNumber() {
         const number = Math.floor(Math.random() * 10); // 0-9 for now
         drawAcrylicNumber(number);
-        speakPolishNumber(number);
+        if (getSelectedMode() === 'learn') {
+            speakPolishNumber(number);
+        }
     }
 
     startBtn.addEventListener('click', showRandomNumber);
