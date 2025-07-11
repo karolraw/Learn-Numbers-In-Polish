@@ -4,13 +4,16 @@ document.addEventListener('DOMContentLoaded', () => {
     const canvas = document.getElementById('acrylic-canvas');
     const ctx = canvas.getContext('2d');
     const startBtn = document.getElementById('start-btn');
+    const pauseBtn = document.getElementById('pause-btn');
+    const restartBtn = document.getElementById('restart-btn');
     const timerDiv = document.getElementById('timer');
 
     let timer = null;
-    let timeLeft = 10;
+    let timeLeft = 5;
     let gameActive = false;
     let round = 0;
     let maxRounds = 10;
+    let paused = false;
 
     // Acrylic brush style colors
     const colors = [
@@ -71,10 +74,9 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function startTimer() {
-        timeLeft = 10;
-        updateTimerDisplay();
         if (timer) clearInterval(timer);
         timer = setInterval(() => {
+            if (paused) return;
             timeLeft--;
             updateTimerDisplay();
             if (timeLeft <= 0) {
@@ -83,6 +85,36 @@ document.addEventListener('DOMContentLoaded', () => {
                 nextRound();
             }
         }, 1000);
+    }
+
+    function pauseGame() {
+        if (paused) {
+            paused = false;
+            startTimer();
+            pauseBtn.textContent = 'Pause';
+        } else {
+            // Pause
+            if (timer) {
+                clearInterval(timer);
+                timer = null;
+            }
+            paused = true;
+            pauseBtn.textContent = 'Resume';
+        }
+    }
+    
+    function restartGame() {
+        if (timer) {
+        clearInterval(timer);
+        timer = null;
+    }
+    gameActive = false;
+    round = 0;
+    timerDiv.textContent = 5;
+    startBtn.disabled = false;
+    clearCanvas();
+    paused = false;
+    pauseBtn.textContent = 'Pause';
     }
 
     function nextRound() {
@@ -97,6 +129,8 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function showRandomNumber() {
+        timeLeft = 5;
+        updateTimerDisplay();
         const number = Math.floor(Math.random() * 10); // 0-9 for now
         drawAcrylicNumber(number);
         if (getSelectedMode() === 'learn') {
@@ -114,4 +148,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     startBtn.addEventListener('click', startGame);
+    pauseBtn.addEventListener('click', pauseGame);
+    restartBtn.addEventListener('click', restartGame);
 });
