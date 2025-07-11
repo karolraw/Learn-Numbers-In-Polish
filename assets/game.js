@@ -9,6 +9,8 @@ document.addEventListener('DOMContentLoaded', () => {
     let timer = null;
     let timeLeft = 10;
     let gameActive = false;
+    let round = 0;
+    let maxRounds = 10;
 
     // Acrylic brush style colors
     const colors = [
@@ -78,14 +80,23 @@ document.addEventListener('DOMContentLoaded', () => {
             if (timeLeft <= 0) {
                 clearInterval(timer);
                 timer = null;
-                gameActive = false;
-                timerDiv.textContent = '⏰';
+                nextRound();
             }
         }, 1000);
     }
 
+    function nextRound() {
+        round++;
+        if (round < maxRounds) {
+            showRandomNumber();
+        } else {
+            gameActive = false;
+            timerDiv.textContent = '✔️';
+            startBtn.disabled = false;
+        }
+    }
+
     function showRandomNumber() {
-        if (!gameActive) gameActive = true;
         const number = Math.floor(Math.random() * 10); // 0-9 for now
         drawAcrylicNumber(number);
         if (getSelectedMode() === 'learn') {
@@ -94,5 +105,13 @@ document.addEventListener('DOMContentLoaded', () => {
         startTimer();
     }
 
-    startBtn.addEventListener('click', showRandomNumber);
+    function startGame() {
+        if (gameActive) return;
+        gameActive = true;
+        round = 0;
+        startBtn.disabled = true;
+        showRandomNumber();
+    }
+
+    startBtn.addEventListener('click', startGame);
 });
