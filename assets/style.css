@@ -168,11 +168,10 @@ button:hover {
 
 @media (max-width: 500px) {
     .container {
-        padding: 16px 4px 12px 4px;
-        max-width: 98vw;
+        max-width: 80vw;
     }
     h1 {
-        font-size: 1.2rem;
+        font-size: 1.5rem;
     }
     .acrylic-canvas-wrapper {
         padding: 4px;
@@ -180,5 +179,8 @@ button:hover {
     #acrylic-canvas {
         max-width: 98vw;
         max-height: 30vh;
+    }
+    .settings-row {
+        flex-direction: column;
     }
 }
