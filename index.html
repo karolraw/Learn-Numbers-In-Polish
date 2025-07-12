@@ -18,6 +18,19 @@
                 <input id="user-input" type="number" min="0" max="999" placeholder="Wpisz liczbę" autocomplete="off" />
                 <button id="read-btn">Read</button>
             </div>
+            <div class="settings-row">
+                <label>Range: 
+                    <select id="range-select">
+                        <option value="10">0-9</option>
+                        <option value="20">0-19</option>
+                        <option value="100">0-99</option>
+                    </select>
+                </label>
+                <label>Speed: 
+                    <input id="speed-range" type="range" min="2" max="8" value="5" />
+                    <span id="speed-value">5s</span>
+                </label>
+            </div>
             <button id="start-btn">Start Game</button>
             <button id="pause-btn">Pause</button>
             <button id="restart-btn">Restart</button>

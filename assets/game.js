@@ -14,6 +14,9 @@ document.addEventListener('DOMContentLoaded', () => {
     let round = 0;
     let maxRounds = 10;
     let paused = false;
+    let numberRange = 10;
+    let speed = 5;
+    let prevNumber = null;
 
     // Acrylic brush style colors
     const colors = [
@@ -64,9 +67,25 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
 
-    // Read button logic
+
+    // Controls
     const readBtn = document.getElementById('read-btn');
     const userInput = document.getElementById('user-input');
+    const rangeSelect = document.getElementById('range-select');
+    const speedRange = document.getElementById('speed-range');
+    const speedValue = document.getElementById('speed-value');
+
+    rangeSelect.addEventListener('change', () => {
+        numberRange = parseInt(rangeSelect.value, 10);
+    });
+    speedRange.addEventListener('input', () => {
+        speed = parseInt(speedRange.value, 10);
+        speedValue.textContent = speed + 's / digit';
+    });
+    // Initialize values
+    numberRange = parseInt(rangeSelect.value, 10);
+    speed = parseInt(speedRange.value, 10);
+    speedValue.textContent = speed + 's / digit';
 
     function speakPolishAnyNumber(num) {
         // For now, only 0-9 supported, but can be extended
@@ -153,20 +172,29 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
+    function getRandomNumber() {
+        let num;
+        do {
+            num = Math.floor(Math.random() * numberRange);
+        } while (num === prevNumber && numberRange > 1);
+        prevNumber = num;
+        return num;
+    }
+
     function showRandomNumber() {
-        timeLeft = 5;
+        timeLeft = speedRange.value;
         updateTimerDisplay();
-        const number = Math.floor(Math.random() * 10); // 0-9 for now
+        const number = getRandomNumber();
         drawAcrylicNumber(number);
-        // Exam mode: no voice
+        // // Exam mode: no voice
         startTimer();
     }
 
     function startGame() {
-        if (gameActive) return;
-        gameActive = true;
-        round = 0;
-        startBtn.disabled = true;
+        // if (gameActive) return;
+        // gameActive = true;
+        // round = 0;
+        // startBtn.disabled = true;
         showRandomNumber();
     }
 
