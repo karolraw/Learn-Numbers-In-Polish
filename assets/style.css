@@ -1,3 +1,33 @@
+.toggle-row {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    margin-bottom: 8px;
+}
+.toggle-btn {
+    background: #e0eafc;
+    color: #2d3a4b;
+    border: 1.5px solid #a1c4fd;
+    border-radius: 8px;
+    padding: 8px 18px;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.2s, border 0.2s;
+}
+.toggle-btn.active {
+    background: #a1c4fd;
+    border-color: #64b5f6;
+}
+.caption {
+    margin-bottom: 18px;
+    font-size: 1.5rem;
+    color: #3a3a3a;
+    text-align: center;
+    min-height: 1.5em;
+    font-style: italic;
+    letter-spacing: 0.5px;
+}
 .settings-row {
     display: flex;
     gap: 18px;

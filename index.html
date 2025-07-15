@@ -13,6 +13,7 @@
             <canvas id="acrylic-canvas" width="350" height="200"></canvas>
             <div id="timer" class="timer">5</div>
         </div>
+        <div id="caption" class="caption"></div>
         <div class="controls">
             <div class="number-input-row">
                 <input id="user-input" type="number" min="0" max="999" autocomplete="off" />
@@ -30,6 +31,10 @@
                     <input id="speed-range" type="range" min="2" max="8" value="5" />
                     <span id="speed-value"></span>
                 </label>
+            </div>
+            <div class="toggle-row">
+                <button id="caption-toggle" class="toggle-btn">Show Captions</button>
+                <button id="read-toggle" class="toggle-btn">Read Aloud</button>
             </div>
             <button id="start-btn">Start Game</button>
             <button id="pause-btn">Pause</button>

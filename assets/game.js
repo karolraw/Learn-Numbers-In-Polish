@@ -1,3 +1,39 @@
+    // Caption and auto-read toggles
+    const captionDiv = document.getElementById('caption');
+    const captionToggle = document.getElementById('caption-toggle');
+    const readToggle = document.getElementById('read-toggle');
+    let captionsEnabled = false;
+    let autoReadEnabled = false;
+
+    // Polish text for numbers 0-99
+    function polishText(num) {
+        // 0-19
+        const basic = [
+            'zero', 'jeden', 'dwa', 'trzy', 'cztery', 'pięć', 'sześć', 'siedem', 'osiem', 'dziewięć',
+            'dziesięć', 'jedenaście', 'dwanaście', 'trzynaście', 'czternaście', 'piętnaście', 'szesnaście', 'siedemnaście', 'osiemnaście', 'dziewiętnaście'
+        ];
+        // 20, 30, ... 90
+        const tens = [ '', '', 'dwadzieścia', 'trzydzieści', 'czterdzieści', 'pięćdziesiąt', 'sześćdziesiąt', 'siedemdziesiąt', 'osiemdziesiąt', 'dziewięćdziesiąt' ];
+        if (num < 20) return basic[num];
+        if (num < 100) {
+            const ten = Math.floor(num / 10);
+            const one = num % 10;
+            return one === 0 ? tens[ten] : tens[ten] + ' ' + basic[one];
+        }
+        return num.toString();
+    }
+
+    captionToggle.addEventListener('click', () => {
+        captionsEnabled = !captionsEnabled;
+        captionToggle.classList.toggle('active', captionsEnabled);
+        captionToggle.textContent = captionsEnabled ? 'Hide Captions' : 'Show Captions';
+        captionDiv.style.display = captionsEnabled ? 'block' : 'none';
+    });
+    readToggle.addEventListener('click', () => {
+        autoReadEnabled = !autoReadEnabled;
+        readToggle.classList.toggle('active', autoReadEnabled);
+        readToggle.textContent = autoReadEnabled ? 'Stop Reading' : 'Read Aloud';
+    });
 // Basic game logic: show a random colorful number on the canvas when Start Game is clicked
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -186,7 +222,16 @@ document.addEventListener('DOMContentLoaded', () => {
         updateTimerDisplay();
         const number = getRandomNumber();
         drawAcrylicNumber(number);
-        // // Exam mode: no voice
+        // Caption logic
+        if (captionsEnabled) {
+            captionDiv.textContent = polishText(number);
+        } else {
+            captionDiv.textContent = '';
+        }
+        // Auto-read logic
+        if (autoReadEnabled) {
+            speakPolishAnyNumber(number);
+        }
         startTimer();
     }
 
